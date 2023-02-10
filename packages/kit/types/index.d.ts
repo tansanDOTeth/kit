@@ -448,6 +448,24 @@ export interface KitConfig {
 		crawl?: boolean;
 		/**
 		 * An array of pages to prerender, or start crawling from (if `crawl: true`). The `*` string includes all non-dynamic routes (i.e. pages with no `[parameters]`, because SvelteKit doesn't know what value the parameters should have).
+     *
+     * You could also specify pages based on an external data source. This is useful if you don't have any anchor elements referencing certain pages.
+     * This may be also useful for those who are building blogs with headless CMS. 
+     *
+     * ```js
+     * // svelte.config.js
+     * const getEntries = async () => await fetch(...).then(response => response.json()); // ["*", "/", "/user/123", ...]
+     * const config = {
+     *   kit: {
+     *     prerender: {
+     *        entries: await getEntries(),
+     *     }
+     *   }
+     * }
+     *
+     * export default config;
+     * ```
+		 *
 		 * @default ["*"]
 		 */
 		entries?: Array<'*' | `/${string}`>;
